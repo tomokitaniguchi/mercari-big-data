@@ -1,0 +1,14 @@
+spring:
+ security:
+  user:
+   # https://docs.spring.io/spring-boot/docs/3.0.1/reference/htmlsingle/#application-properties.security.spring.security.user.name
+   name: test
+   password: 1qazxsw2
+ datasource:
+  driver-class-name:  org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/mercari
+  username: postgres
+  password: postgres
+server:
+ servlet:
+  context-path: /mercari-data
