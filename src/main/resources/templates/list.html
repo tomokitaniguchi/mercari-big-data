@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -43,19 +44,19 @@
   <div id="main" class="container-fluid">
     <!-- addItem link -->
     <div id="addItemButton">
-      <a class="btn btn-default" href="./add.html"><i class="fa fa-plus-square-o"></i> Add New Item</a>
+      <a class="btn btn-default" href="./add.html"><i class="fa fa-plus-square-o"></i> アイテムを追加</a>
     </div>
 
     <!-- 検索フォーム -->
     <div id="forms">
       <form action="" class="form-inline" role="form">
         <div class="form-group">
-          <input type="input" class="form-control" id="name" placeholder="item name"/>
+          <input type="input" class="form-control" id="name" placeholder="アイテム名"/>
         </div>
         <div class="form-group"><i class="fa fa-plus"></i></div>
         <div class="form-group">
           <select class="form-control">
-            <option>- parentCategory -</option>
+            <option>- 大カテゴリー -</option>
             <option>parentCategory1</option>
             <option>parentCategory2</option>
             <option>parentCategory3</option>
@@ -63,7 +64,7 @@
             <option>parentCategory5</option>
           </select>
           <select class="form-control">
-            <option>- childCategory -</option>
+            <option>- 中カテゴリー -</option>
             <option>childCategory1</option>
             <option>childCategory2</option>
             <option>childCategory3</option>
@@ -71,7 +72,7 @@
             <option>childCategory5</option>
           </select>
           <select class="form-control">
-            <option>- grandChild -</option>
+            <option>- 小カテゴリー -</option>
             <option>grandChild1</option>
             <option>grandChild2</option>
             <option>grandChild3</option>
@@ -81,10 +82,10 @@
         </div>
         <div class="form-group"><i class="fa fa-plus"></i></div>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="brand"/>
+          <input type="text" class="form-control" placeholder="ブランド"/>
         </div>
         <div class="form-group"></div>
-        <button type="submit" class="btn btn-default"><i class="fa fa-angle-double-right"></i> search</button>
+        <button type="submit" class="btn btn-default"><i class="fa fa-angle-double-right"></i> 検索</button>
       </form>
     </div>
 
