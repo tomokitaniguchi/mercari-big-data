@@ -57,27 +57,18 @@
         <div class="form-group">
           <select class="form-control">
             <option>- 大カテゴリー -</option>
-            <option>parentCategory1</option>
-            <option>parentCategory2</option>
-            <option>parentCategory3</option>
-            <option>parentCategory4</option>
-            <option>parentCategory5</option>
+            <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}">
+            </option>
           </select>
           <select class="form-control">
             <option>- 中カテゴリー -</option>
-            <option>childCategory1</option>
-            <option>childCategory2</option>
-            <option>childCategory3</option>
-            <option>childCategory4</option>
-            <option>childCategory5</option>
+            <option th:each="middleCategoryList:${middleCategoryList}" th:text="${middleCategoryList.name}">
+            </option>
           </select>
           <select class="form-control">
             <option>- 小カテゴリー -</option>
-            <option>grandChild1</option>
-            <option>grandChild2</option>
-            <option>grandChild3</option>
-            <option>grandChild4</option>
-            <option>grandChild5</option>
+            <option th:each="smallCategoryList:${smallCategoryList}" th:text="${smallCategoryList.name}">
+            </option>
           </select>
         </div>
         <div class="form-group"><i class="fa fa-plus"></i></div>

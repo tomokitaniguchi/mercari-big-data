@@ -2,8 +2,8 @@ spring:
  security:
   user:
    # https://docs.spring.io/spring-boot/docs/3.0.1/reference/htmlsingle/#application-properties.security.spring.security.user.name
-   name: test
-   password: 1qazxsw2
+   name: admin.ziro@rakus-partners.co.jp
+   password: Aaaaa123
  datasource:
   driver-class-name:  org.postgresql.Driver
   url: jdbc:postgresql://localhost:5432/mercari
