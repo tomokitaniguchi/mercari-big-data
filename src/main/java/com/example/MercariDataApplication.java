@@ -9,7 +9,6 @@ public class MercariDataApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(MercariDataApplication.class, args);
-		System.out.println("aaa");
 	}
 
 }

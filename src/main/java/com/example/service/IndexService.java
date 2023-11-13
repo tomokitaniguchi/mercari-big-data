@@ -14,7 +14,19 @@ public class IndexService {
   @Autowired
   private IndexRepository repository;
   
-  private List<Index> index(){
+  public List<Index> index(){
     return repository.index();
+  }
+
+  public List<Index> bigCategory(){
+    return repository.bigCategory();
+  }
+
+  public List<Index> middleCategory(){
+    return repository.middleCategory();
+  }
+
+  public List<Index> smallCategory(){
+    return repository.smallCategory();
   }
 }
