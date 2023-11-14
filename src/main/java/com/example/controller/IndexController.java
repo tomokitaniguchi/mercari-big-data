@@ -26,7 +26,11 @@ public class IndexController {
   
   @GetMapping("")
   public String index(Model model){
-    //大カテゴリーを取得 
+    // 商品一覧を取得
+    List<Index> indexList = service.index();
+    model.addAttribute("indexList",indexList);
+
+    // 大カテゴリーを取得 
     List<Index> bigCategoryList = service.bigCategory();
     model.addAttribute("bigCategoryList",bigCategoryList);
     // 中カテゴリーを取得
@@ -39,8 +43,8 @@ public class IndexController {
     return "list.html";
   }
 
-  @PostMapping("/post")
-  public String indexPost(){
+  @PostMapping("/goDetail")
+  public String goDetail(){
     List<Index> indexList = service.index();
     session.setAttribute("indexList", indexList);
     return "redirect:list";

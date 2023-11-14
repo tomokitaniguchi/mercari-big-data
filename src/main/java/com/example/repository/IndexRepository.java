@@ -18,7 +18,7 @@ public class IndexRepository {
    private static final RowMapper<Index> LIST_ROW_MAPPER = new BeanPropertyRowMapper<>(Index.class);
 
    public List<Index> index(){
-       String sql = "SELECT id,name,condition,category,brand,price,shipping,description FROM items;";
+       String sql = "SELECT i.id, name, condition, c.category, brand, price, shipping, description FROM items AS i INNER JOIN (SELECT id, name_all AS category FROM category) AS c ON i.category = c.id ORDER BY id LIMIT 20 OFFSET 0;";
        List<Index> indexList = template.query(sql,LIST_ROW_MAPPER);
        System.out.println(indexList);
        return indexList;
@@ -39,7 +39,7 @@ public class IndexRepository {
     * @return
     */
    public List<Index> middleCategory(){
-       String sql = "SELECT name FROM category WHERE id BETWEEN 11 AND 148;";
+       String sql = "SELECT distinct name FROM category WHERE id BETWEEN 11 AND 148 ORDER BY name;";
        List<Index> middleCategoryList = template.query(sql,LIST_ROW_MAPPER);
        return middleCategoryList;
    }
@@ -49,7 +49,7 @@ public class IndexRepository {
     * @return
     */
    public List<Index> smallCategory(){
-       String sql = "SELECT name FROM category WHERE id BETWEEN 149 AND 1435;";
+       String sql = "SELECT distinct name FROM category WHERE id BETWEEN 149 AND 1435 ORDER BY name;";
        List<Index> smallCategoryList = template.query(sql,LIST_ROW_MAPPER);
        return smallCategoryList;
    }

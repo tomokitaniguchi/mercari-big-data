@@ -12,7 +12,7 @@ public class Index {
   public Integer id;
   public String name;
   public Integer condition;
-  public Integer category;
+  public String category;
   public String brand;
   public Integer price;
   public Integer shipping;
