@@ -9,9 +9,9 @@ spring:
   url: jdbc:postgresql://localhost:5432/mercari
   username: postgres
   password: postgres
- batch:
-   jdbc:
-     initialize-schema: always
+#  batch:
+#    jdbc:
+#      initialize-schema: always
 server:
  servlet:
   context-path: /mercari-data
