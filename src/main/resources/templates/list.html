@@ -104,8 +104,11 @@
         </thead>
         <tbody>
           <tr th:each="index:${indexList}">
-            <a th:href="@{/index/?id=}+${index.id}"><td class="item-name" th:text="${index.name}"></td></a>
-            <td class="item-price" th:text="${index.price}"></td>
+            <td><a th:href="@{/detail?id=}+${index.id}">
+              <div class="item-name" th:text="${index.name}"></div>
+            </a>
+            </td>
+            <td class="item-price" th:text="${index.price}+'.0'"></td>
             <td class="item-category" th:text="${index.category}"><a href=""></a></td>
             <td class="item-brand" th:text="${index.brand}"><a href=""></a></td>
             <td class="item-condition" th:text="${index.condition}"></td>
