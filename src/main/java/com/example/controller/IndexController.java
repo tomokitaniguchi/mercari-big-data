@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.Index;
+import com.example.domain.items;
 import com.example.service.IndexService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,22 +26,26 @@ public class IndexController {
   
   @GetMapping("")
   public String index(Model model){
-    //大カテゴリーを取得 
-    List<Index> bigCategoryList = service.bigCategory();
+    // 商品一覧を取得
+    List<items> indexList = service.index();
+    model.addAttribute("indexList",indexList);
+
+    // 大カテゴリーを取得 
+    List<items> bigCategoryList = service.bigCategory();
     model.addAttribute("bigCategoryList",bigCategoryList);
     // 中カテゴリーを取得
-    List<Index> middleCategoryList = service.middleCategory();
+    List<items> middleCategoryList = service.middleCategory();
     model.addAttribute("middleCategoryList",middleCategoryList);
     // 小カテゴリーを取得
-    List<Index> smallCategoryList = service.smallCategory();
+    List<items> smallCategoryList = service.smallCategory();
     model.addAttribute("smallCategoryList",smallCategoryList);
 
     return "list.html";
   }
 
-  @PostMapping("/post")
-  public String indexPost(){
-    List<Index> indexList = service.index();
+  @PostMapping("/goDetail")
+  public String goDetail(){
+    List<items> indexList = service.index();
     session.setAttribute("indexList", indexList);
     return "redirect:list";
   }

@@ -103,14 +103,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="item-name"><a href="./detail.html">Razer BlackWidow Chroma Keyboard</a></td>
-            <td class="item-price">52.0</td>
-            <td class="item-category"><a href="">Electronics</a> / <a href="">Computers &amp; Tablets</a> / <a href="">Components &amp; Parts</a></td>
-            <td class="item-brand"><a href="">Razer</a></td>
-            <td class="item-condition">3</td>
+          <tr th:each="index:${indexList}">
+            <td><a th:href="@{/detail?id=}+${index.id}">
+              <div class="item-name" th:text="${index.name}"></div>
+            </a>
+            </td>
+            <td class="item-price" th:text="${index.price}+'.0'"></td>
+            <td class="item-category" th:text="${index.category}"><a href=""></a></td>
+            <td class="item-brand" th:text="${index.brand}"><a href=""></a></td>
+            <td class="item-condition" th:text="${index.condition}"></td>
           </tr>
-          <tr>
+          <!-- <tr>
             <td class="item-name"><a href="./detail.html">AVA-VIV Blouse</a></td>
             <td class="item-price">10.0</td>
             <td class="item-category">Women / Tops &amp; Blouses / Blouse</td>
@@ -312,7 +315,7 @@
             <td class="item-category">Beauty / Makeup / Face</td>
             <td class="item-brand">Smashbox</td>
             <td class="item-condition">2</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
