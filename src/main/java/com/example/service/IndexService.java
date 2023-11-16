@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.domain.items;
+import com.example.domain.Items;
 import com.example.repository.IndexRepository;
 
 @Service
@@ -14,19 +14,19 @@ public class IndexService {
   @Autowired
   private IndexRepository repository;
   
-  public List<items> index(){
+  public List<Items> index(){
     return repository.index();
   }
 
-  public List<items> bigCategory(){
+  public List<Items> bigCategory(){
     return repository.bigCategory();
   }
 
-  public List<items> middleCategory(){
+  public List<Items> middleCategory(){
     return repository.middleCategory();
   }
 
-  public List<items> smallCategory(){
+  public List<Items> smallCategory(){
     return repository.smallCategory();
   }
 }

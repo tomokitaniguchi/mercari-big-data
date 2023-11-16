@@ -26,7 +26,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./list.html">Rakus Items</a>
+      <a class="navbar-brand" th:href="@{/index}">Rakus Items</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <div>
@@ -41,8 +41,10 @@
   </nav>
 
   <!-- details -->
-  <div id="input-main" class="container">
-    <a type="button" class="btn btn-default" href="./detail.html"><i class="fa fa-reply"></i> back</a>
+  <div id="input-main" class="container" >
+    <div th:each="detail:${session.detailList}">
+      <a type="button" class="btn btn-default" th:href="@{/detail?id=}+${detail.id}"><i class="fa fa-reply"></i> back</a>
+    </div>
     <h2>Edit</h2>
 
     <!-- edit form -->
@@ -51,53 +53,44 @@
         <div class="form-group">
           <label for="inputName" class="col-sm-2 control-label">name</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputName"/>
+            <input type="text" class="form-control" id="inputName" name="name" placeholder="name"/>
           </div>
         </div>
         <!-- price -->
         <div class="form-group">
           <label for="price" class="col-sm-2 control-label">price</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="price"/>
+            <input type="text" class="form-control" id="price" name="price" placeholder="price"/>
           </div>
         </div>
         <!-- category -->
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label">category</label>
           <div class="col-sm-8">
-            <select class="form-control">
-              <option>- parentCategory -</option>
-              <option>parentCategory1</option>
-              <option>parentCategory2</option>
-              <option>parentCategory3</option>
-              <option>parentCategory4</option>
-              <option>parentCategory5</option>
+            <select class="form-control" name="bigCategory">
+              <option>- 大カテゴリー -</option>
+              <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}">
+              </option>  
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
-            <select class="form-control">
-              <option>- childCategory -</option>
-              <option>childCategory1</option>
-              <option>childCategory2</option>
-              <option>childCategory3</option>
-              <option>childCategory4</option>
-              <option>childCategory5</option>
+            <select class="form-control" name="middleCategory">
+              <option>- 中カテゴリー -</option>
+              <option th:each="middleCategoryList:${middleCategoryList}" th:text="${middleCategoryList.name}">
+              </option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
-            <select class="form-control">
-              <option>- grandChild -</option>
-              <option>grandChild1</option>
-              <option>grandChild2</option>
-              <option>grandChild3</option>
-              <option>grandChild4</option>
-              <option>grandChild5</option>
+            <select class="form-control" name="smallCategory">
+              <option>- 小カテゴリー -</option>
+              <option th:each="smallCategoryList:${smallCategoryList}" th:text="${smallCategoryList.name}">
+              </option>
             </select>
           </div>
         </div>
