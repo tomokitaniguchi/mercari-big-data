@@ -21,7 +21,15 @@ public class DetailRepository {
      private static final RowMapper<Items> LIST_ROW_MAPPER = new BeanPropertyRowMapper<>(Items.class);
 
      public List<Items> detail(Integer id){
-      String sql = "SELECT i.id, name, condition, c.category, brand, price, shipping, description FROM items AS i INNER JOIN (SELECT id, name_all AS category FROM category) AS c ON i.category = c.id WHERE i.id=:id ";
+      String sql = "SELECT I.ID,NAME,CONDITION,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION \n" + //
+                "FROM ITEMS AS I INNER JOIN \n" + //
+                "(SELECT A.ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY \n" + //
+                "FROM CATEGORY AS A INNER JOIN (SELECT DISTINCT ID,\n" + //
+                "SPLIT_PART(NAME_ALL,'/',1) AS BIG_CATEGORY,\n" + //
+                "SPLIT_PART(NAME_ALL,'/',2) AS MIDDLE_CATEGORY,\n" + //
+                "SPLIT_PART(NAME_ALL,'/',3) AS SMALL_CATEGORY\n" + //
+                "FROM CATEGORY WHERE NAME_ALL IS NOT NULL ) AS B ON A.ID = B.ID\n" + //
+                "ORDER BY ID) AS C ON I.CATEGORY = C.ID WHERE i.id=:id ";
       SqlParameterSource param = new MapSqlParameterSource().addValue("id",id);
       List<Items> detailList = template.query(sql,param,LIST_ROW_MAPPER);
       return detailList;

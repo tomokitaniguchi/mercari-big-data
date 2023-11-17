@@ -48,19 +48,19 @@
     <h2>Edit</h2>
 
     <!-- edit form -->
-    <form action="#" method="POST" class="form-horizontal">
+    <form th:action="@{/edit/edit-do}" method="POST" class="form-horizontal" th:each="detail:${detailList}" >
         <!-- name -->
         <div class="form-group">
           <label for="inputName" class="col-sm-2 control-label">name</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputName" name="name" placeholder="name"/>
+            <input type="text" class="form-control" id="inputName" name="name" th:value="${detail.name}" th:placeholder="${detail.name}"/>
           </div>
         </div>
         <!-- price -->
         <div class="form-group">
           <label for="price" class="col-sm-2 control-label">price</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="price" name="price" placeholder="price"/>
+            <input type="text" class="form-control" id="price" name="price" th:value="${detail.price}" th:placeholder="${detail.price}"/>
           </div>
         </div>
         <!-- category -->
@@ -68,9 +68,7 @@
           <label for="category" class="col-sm-2 control-label">category</label>
           <div class="col-sm-8">
             <select class="form-control" name="bigCategory">
-              <option>- 大カテゴリー -</option>
-              <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}">
-              </option>  
+              <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}" th:selected="${bigCategory.name == detail.bigCategory}"></option>  
             </select>
           </div>
         </div>
@@ -78,9 +76,7 @@
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
             <select class="form-control" name="middleCategory">
-              <option>- 中カテゴリー -</option>
-              <option th:each="middleCategoryList:${middleCategoryList}" th:text="${middleCategoryList.name}">
-              </option>
+              <option th:each="middleCategory:${middleCategoryList}" th:text="${middleCategory.name}" th:selected="${middleCategory.name == detail.middleCategory}"></option>
             </select>
           </div>
         </div>
@@ -88,9 +84,7 @@
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
             <select class="form-control" name="smallCategory">
-              <option>- 小カテゴリー -</option>
-              <option th:each="smallCategoryList:${smallCategoryList}" th:text="${smallCategoryList.name}">
-              </option>
+              <option th:each="smallCategory:${smallCategoryList}" th:text="${smallCategory.name}" th:selected="${smallCategory.name == detail.smallCategory}"></option>
             </select>
           </div>
         </div>
@@ -98,7 +92,7 @@
         <div class="form-group">
           <label for="brand" class="col-sm-2 control-label">brand</label>
           <div class="col-sm-8">
-            <input type="text" id="brand" class="form-control" name="brand"/>
+            <input type="text" id="brand" class="form-control" name="brand" th:value="${detail.brand}" th:placeholder="${detail.brand}"/>
           </div>
         </div>
         <!-- condition -->
@@ -106,13 +100,13 @@
           <label for="condition" class="col-sm-2 control-label">condition</label>
           <div class="col-sm-8">
             <label for="condition1" class="radio-inline">
-              <input type="radio" name="condition" id="condition1" value="1"/> 1
+              <input type="radio" name="condition" id="condition1" value="1" th:checked="${detail.condition==1}"/> 1
             </label>
             <label for="condition2" class="radio-inline">
-              <input type="radio" name="condition" id="condition2" value="2"/> 2
+              <input type="radio" name="condition" id="condition2" value="2" th:checked="${detail.condition==2}"/> 2
             </label>
             <label for="condition3" class="radio-inline">
-              <input type="radio" name="condition" id="condition3" value="3"/> 3
+              <input type="radio" name="condition" id="condition3" value="3" th:checked="${detail.condition==3}"/> 3
             </label>
           </div>
         </div>
@@ -120,7 +114,7 @@
         <div class="form-group">
           <label for="description" class="col-sm-2 control-label">description</label>
           <div class="col-sm-8">
-            <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+            <textarea name="description" id="description" class="form-control" rows="5" th:text="${detail.description}" th:placeholder="${detail.description}"></textarea>
           </div>
         </div>
         <!-- submit button -->
