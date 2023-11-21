@@ -15,7 +15,7 @@ public class EditRepository {
   private NamedParameterJdbcTemplate template;
 
      public void edit(Items items){
-      String sql = "UPDATE items SET name=:name, price=:price, big_category=:bigCategory, middle_category=:middleCategory, small_category=:smallCategory, brand=:brand, condition=:condition, description=:description WHERE id=:id ";
+      String sql = "UPDATE items SET name=:name, price=:price, big_category=:bigCategory, middle_category=:middleCategory, small_category=:smallCategory, brand=:brand, condition=:condition, description=:description WHERE id=:id;";
       SqlParameterSource param = new BeanPropertySqlParameterSource(items);
       template.update(sql, param);
      }
