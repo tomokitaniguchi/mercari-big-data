@@ -16,6 +16,18 @@ public class EditService {
   @Autowired
   private DetailRepository detailRepository;
 
+  public List<Items> bigCategory(){
+    return editRepository.bigCategory();
+  }
+
+  public List<Items> middleCategory(Items items){
+    return editRepository.middleCategory(items);
+  }
+
+  public List<Items> smallCategory(Items items){
+    return editRepository.smallCategory(items);
+  }
+
   public void edit(Items item){
     editRepository.edit(item);
   }
