@@ -5,14 +5,14 @@ import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
 
-import com.example.domain.items;
+import com.example.domain.Items;
 
 @Component
 @StepScope
-public class ItemsWriter implements ItemWriter<items> {
+public class ItemsWriter implements ItemWriter<Items> {
   
   @Override
-  public void write(Chunk<? extends items> chunk) throws Exception {
+  public void write(Chunk<? extends Items> chunk) throws Exception {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'write'");
   }

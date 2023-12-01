@@ -8,23 +8,30 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.domain.items;
+import com.example.domain.Items;
 
 @Repository
 public class IndexRepository {
    @Autowired
    private NamedParameterJdbcTemplate template;
 
-   private static final RowMapper<items> LIST_ROW_MAPPER = new BeanPropertyRowMapper<>(items.class);
+   private static final RowMapper<Items> LIST_ROW_MAPPER = new BeanPropertyRowMapper<>(Items.class);
 
    /**
     * 商品一覧を取得する
     * @return
     */
-   public List<items> index(){
-       String sql = "SELECT i.id, name, condition, c.category, brand, price, shipping, description FROM items AS i INNER JOIN (SELECT id, name_all AS category FROM category) AS c ON i.category = c.id ORDER BY id LIMIT 20 OFFSET 0;";
-       List<items> indexList = template.query(sql,LIST_ROW_MAPPER);
-       System.out.println(indexList);
+   public List<Items> index(){
+       String sql = "SELECT I.ID,NAME,CONDITION,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION \n" + //
+               "FROM ITEMS AS I INNER JOIN \n" + //
+               "(SELECT A.ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY \n" + //
+               "FROM CATEGORY AS A INNER JOIN (SELECT DISTINCT ID,\n" + //
+               "SPLIT_PART(NAME_ALL,'/',1) AS BIG_CATEGORY,\n" + //
+               "SPLIT_PART(NAME_ALL,'/',2) AS MIDDLE_CATEGORY,\n" + //
+               "SPLIT_PART(NAME_ALL,'/',3) AS SMALL_CATEGORY\n" + //
+               "FROM CATEGORY WHERE NAME_ALL IS NOT NULL ) AS B ON A.ID = B.ID\n" + //
+               "ORDER BY ID) AS C ON I.CATEGORY = C.ID ORDER BY ID LIMIT 20 OFFSET 0;";
+       List<Items> indexList = template.query(sql,LIST_ROW_MAPPER);
        return indexList;
    }
 
@@ -32,9 +39,9 @@ public class IndexRepository {
     * 大カテゴリーを取得する
     * @return 
     */
-   public List<items> bigCategory(){
+   public List<Items> bigCategory(){
        String sql = "SELECT name FROM big_category;";
-       List<items> bigCategoryList = template.query(sql,LIST_ROW_MAPPER);
+       List<Items> bigCategoryList = template.query(sql,LIST_ROW_MAPPER);
        return bigCategoryList;
    }
 
@@ -42,19 +49,19 @@ public class IndexRepository {
     * 中カテゴリーを取得する
     * @return
     */
-   public List<items> middleCategory(){
-       String sql = "SELECT distinct name FROM category WHERE id BETWEEN 11 AND 148 ORDER BY name;";
-       List<items> middleCategoryList = template.query(sql,LIST_ROW_MAPPER);
-       return middleCategoryList;
+   public List<Items> middleCategory(){
+     String sql = "SELECT distinct name FROM category WHERE id BETWEEN 11 AND 148 ORDER BY name;";
+     List<Items> middleCategoryList = template.query(sql,LIST_ROW_MAPPER);
+     return middleCategoryList;
    }
 
    /**
     * 小カテゴリーを取得
     * @return
     */
-   public List<items> smallCategory(){
+   public List<Items> smallCategory(){
        String sql = "SELECT distinct name FROM category WHERE id BETWEEN 149 AND 1435 ORDER BY name;";
-       List<items> smallCategoryList = template.query(sql,LIST_ROW_MAPPER);
+       List<Items> smallCategoryList = template.query(sql,LIST_ROW_MAPPER);
        return smallCategoryList;
    }
 }

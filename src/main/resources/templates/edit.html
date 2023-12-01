@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -26,7 +27,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./list.html">Rakus Items</a>
+      <a class="navbar-brand" th:href="@{/index}">Rakus Items</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <div>
@@ -41,63 +42,50 @@
   </nav>
 
   <!-- details -->
-  <div id="input-main" class="container">
-    <a type="button" class="btn btn-default" href="./detail.html"><i class="fa fa-reply"></i> back</a>
+  <div id="input-main" class="container" >
+    <div th:each="detail:${session.detailList}">
+      <a type="button" class="btn btn-default" th:href="@{/detail?id=}+${detail.id}"><i class="fa fa-reply"></i> back</a>
+    </div>
     <h2>Edit</h2>
 
     <!-- edit form -->
-    <form action="#" method="POST" class="form-horizontal">
+    <form th:action="@{/edit/select}" method="POST" th:object="${editForm}" class="form-horizontal" th:each="detail:${detailList}" >
         <!-- name -->
         <div class="form-group">
           <label for="inputName" class="col-sm-2 control-label">name</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputName"/>
+            <input type="text" class="form-control" id="inputName" name="name" th:value="${detail.name}" th:placeholder="${detail.name}"/>
           </div>
         </div>
         <!-- price -->
         <div class="form-group">
           <label for="price" class="col-sm-2 control-label">price</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="price"/>
+            <input type="text" class="form-control" id="price" name="price" th:value="${detail.price}" th:placeholder="${detail.price}"/>
           </div>
         </div>
         <!-- category -->
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label">category</label>
           <div class="col-sm-8">
-            <select class="form-control">
-              <option>- parentCategory -</option>
-              <option>parentCategory1</option>
-              <option>parentCategory2</option>
-              <option>parentCategory3</option>
-              <option>parentCategory4</option>
-              <option>parentCategory5</option>
+            <select class="form-control" id="firstSelect" name="bigCategory" onchange="handleFirstSelectChange(this)">
+              <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}" th:selected="${bigCategory.name == detail.bigCategory}"></option>  
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
-            <select class="form-control">
-              <option>- childCategory -</option>
-              <option>childCategory1</option>
-              <option>childCategory2</option>
-              <option>childCategory3</option>
-              <option>childCategory4</option>
-              <option>childCategory5</option>
+            <select class="form-control" id="secondSelect" name="middleCategory" onchange="handleSecondSelectChange(this)" disabled>
+              <option th:each="middleCategory:${middleCategoryList}" th:text="${middleCategory.middleCategory}" th:selected="${middleCategory.name == detail.middleCategory}"></option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
-            <select class="form-control">
-              <option>- grandChild -</option>
-              <option>grandChild1</option>
-              <option>grandChild2</option>
-              <option>grandChild3</option>
-              <option>grandChild4</option>
-              <option>grandChild5</option>
+            <select class="form-control" id="thirdSelect" name="smallCategory" disabled>
+              <option th:each="smallCategory:${smallCategoryList}" th:text="${smallCategory.smallCategory}" th:selected="${smallCategory.name == detail.smallCategory}"></option>
             </select>
           </div>
         </div>
@@ -105,7 +93,7 @@
         <div class="form-group">
           <label for="brand" class="col-sm-2 control-label">brand</label>
           <div class="col-sm-8">
-            <input type="text" id="brand" class="form-control" name="brand"/>
+            <input type="text" id="brand" class="form-control" name="brand" th:value="${detail.brand}" th:placeholder="${detail.brand}"/>
           </div>
         </div>
         <!-- condition -->
@@ -113,13 +101,13 @@
           <label for="condition" class="col-sm-2 control-label">condition</label>
           <div class="col-sm-8">
             <label for="condition1" class="radio-inline">
-              <input type="radio" name="condition" id="condition1" value="1"/> 1
+              <input type="radio" name="condition" id="condition1" value="1" th:checked="${detail.condition==1}"/> 1
             </label>
             <label for="condition2" class="radio-inline">
-              <input type="radio" name="condition" id="condition2" value="2"/> 2
+              <input type="radio" name="condition" id="condition2" value="2" th:checked="${detail.condition==2}"/> 2
             </label>
             <label for="condition3" class="radio-inline">
-              <input type="radio" name="condition" id="condition3" value="3"/> 3
+              <input type="radio" name="condition" id="condition3" value="3" th:checked="${detail.condition==3}"/> 3
             </label>
           </div>
         </div>
@@ -127,7 +115,7 @@
         <div class="form-group">
           <label for="description" class="col-sm-2 control-label">description</label>
           <div class="col-sm-8">
-            <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+            <textarea name="description" id="description" class="form-control" rows="5" th:text="${detail.description}" th:placeholder="${detail.description}"></textarea>
           </div>
         </div>
         <!-- submit button -->
@@ -138,5 +126,7 @@
         </div>
       </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="src/main/resources/static/js/edit.js" th:src="@{/js/edit.js}"></script>
 </body>
 </html>
