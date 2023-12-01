@@ -27,7 +27,7 @@ document.getElementById("firstSelect").addEventListener("change", function() {
   params.append('bigCategory', selectedValue);
 
   // クエリパラメータを含むURLを作成してGETリクエストを送信
-  fetch('/mercari-data/edit/response?' + params, {
+  fetch('/mercari-data/edit/category-response?' + params, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ document.getElementById("secondSelect").addEventListener("change", function() {
   params.append('middleCategory', selectedValue);
   
   // クエリパラメータを含むURLを作成してGETリクエストを送信
-  fetch('/mercari-data/edit/response?' + params, {
+  fetch('/mercari-data/edit/category-response?' + params, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'

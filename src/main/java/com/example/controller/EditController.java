@@ -45,8 +45,8 @@ public class EditController {
   }
 
   // 非同期処理のリクエストに対するレスポンスをJSON形式で返すメソッド
-  @GetMapping("/response")
-  public ResponseEntity<String> response(Items items, String bigCategory, String middleCategory) throws JsonProcessingException{
+  @GetMapping("/category-response")
+  public ResponseEntity<String> categoryResponse(Items items, String bigCategory, String middleCategory) throws JsonProcessingException{
     if (bigCategory!=null) {
       // 中カテゴリーを取得
       List<Items> middleCategoryList = editService.middleCategory(items, bigCategory);
