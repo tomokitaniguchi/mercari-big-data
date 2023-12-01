@@ -35,8 +35,7 @@ public class EditRepository {
     * 大カテゴリーに付随した中カテゴリーを取得する
     * @return
     */
-   public List<Items> middleCategory(Items items){
-     System.out.println("大カテ"+items.bigCategory);
+   public List<Items> middleCategory(Items items,String bigCategory){
        String sql = "SELECT distinct MIDDLE_CATEGORY,BIG_CATEGORY\n" + //
                "FROM ITEMS AS I INNER JOIN (\n" + //
                "SELECT A.ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY \n" + //
@@ -50,17 +49,23 @@ public class EditRepository {
                " ) AS B ON A.ID = B.ID\n" + //
                "ORDER BY ID\n" + //
                ") AS C ON I.CATEGORY = C.ID WHERE BIG_CATEGORY=:bigCategory order by MIDDLE_CATEGORY;";
-       SqlParameterSource param = new MapSqlParameterSource().addValue("bigCategory", items.bigCategory);
-       List<Items> middleCategoryList = template.query(sql,param,LIST_ROW_MAPPER);
-    //    System.out.println(middleCategoryList);
-       return middleCategoryList;
+      if (bigCategory!=null) { 
+        // 大カテゴリーが変更されたとき
+        SqlParameterSource param = new MapSqlParameterSource().addValue("bigCategory", bigCategory);
+        List<Items> middleCategoryList = template.query(sql,param,LIST_ROW_MAPPER);
+        return middleCategoryList;
+      } else {
+        SqlParameterSource param = new MapSqlParameterSource().addValue("bigCategory", items.bigCategory);
+        List<Items> middleCategoryList = template.query(sql,param,LIST_ROW_MAPPER);
+        return middleCategoryList;
+       }     
    }
 
   /**
    * 中カテゴリーに付随した小カテゴリーを取得する
    * @return
    */
-   public List<Items> smallCategory(Items items){
+   public List<Items> smallCategory(Items items, String middleCategory){
      String sql = "SELECT distinct SMALL_CATEGORY,MIDDLE_CATEGORY\n" + //
          "FROM ITEMS AS I INNER JOIN (\n" + //
          "SELECT A.ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY \n" + //
@@ -74,9 +79,16 @@ public class EditRepository {
          " ) AS B ON A.ID = B.ID\n" + //
          "ORDER BY ID\n" + //
          ") AS C ON I.CATEGORY = C.ID WHERE MIDDLE_CATEGORY=:middleCategory order by SMALL_CATEGORY;";
-     SqlParameterSource param = new MapSqlParameterSource().addValue("middleCategory", items.middleCategory);
-     List<Items> smallCategoryList = template.query(sql,param,LIST_ROW_MAPPER);
-     return smallCategoryList;
+      if (middleCategory!=null) { 
+        // 中カテゴリーが変更されたとき
+        SqlParameterSource param = new MapSqlParameterSource().addValue("middleCategory", middleCategory);
+        List<Items> smallCategoryList = template.query(sql,param,LIST_ROW_MAPPER);
+        return smallCategoryList;
+      } else {
+        SqlParameterSource param = new MapSqlParameterSource().addValue("middleCategory", items.middleCategory);
+        List<Items> smallCategoryList = template.query(sql,param,LIST_ROW_MAPPER);
+        return smallCategoryList;
+       }  
    }
 
    /**

@@ -20,12 +20,12 @@ public class EditService {
     return editRepository.bigCategory();
   }
 
-  public List<Items> middleCategory(Items items){
-    return editRepository.middleCategory(items);
+  public List<Items> middleCategory(Items items,String bigCategory){
+    return editRepository.middleCategory(items, bigCategory);
   }
 
-  public List<Items> smallCategory(Items items){
-    return editRepository.smallCategory(items);
+  public List<Items> smallCategory(Items items, String middleCategory){
+    return editRepository.smallCategory(items,middleCategory);
   }
 
   public void edit(Items item){

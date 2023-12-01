@@ -32,7 +32,6 @@ public class IndexRepository {
                "FROM CATEGORY WHERE NAME_ALL IS NOT NULL ) AS B ON A.ID = B.ID\n" + //
                "ORDER BY ID) AS C ON I.CATEGORY = C.ID ORDER BY ID LIMIT 20 OFFSET 0;";
        List<Items> indexList = template.query(sql,LIST_ROW_MAPPER);
-       System.out.println(indexList);
        return indexList;
    }
 
@@ -51,9 +50,9 @@ public class IndexRepository {
     * @return
     */
    public List<Items> middleCategory(){
-       String sql = "SELECT distinct name FROM category WHERE id BETWEEN 11 AND 148 ORDER BY name;";
-       List<Items> middleCategoryList = template.query(sql,LIST_ROW_MAPPER);
-       return middleCategoryList;
+     String sql = "SELECT distinct name FROM category WHERE id BETWEEN 11 AND 148 ORDER BY name;";
+     List<Items> middleCategoryList = template.query(sql,LIST_ROW_MAPPER);
+     return middleCategoryList;
    }
 
    /**
