@@ -12,13 +12,13 @@ import com.example.domain.Items;
 import com.example.service.IndexService;
 
 @Controller
-@RequestMapping("/index")
+@RequestMapping("/home")
 public class IndexController {
 
   @Autowired
   private IndexService service;
   
-  @GetMapping("")
+  @GetMapping("/index")
   public String index(Model model,Items items){
     // 商品一覧を取得
     List<Items> indexList = service.index();
