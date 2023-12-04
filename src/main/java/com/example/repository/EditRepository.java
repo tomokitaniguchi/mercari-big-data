@@ -87,7 +87,6 @@ public class EditRepository {
         // 中カテゴリーが変更されたとき
         SqlParameterSource param = new MapSqlParameterSource().addValue("middleCategory", middleCategory);
         List<Items> smallCategoryList = template.query(sql,param,LIST_ROW_MAPPER);
-        System.out.println(smallCategoryList);
         return smallCategoryList;
       } else {
         SqlParameterSource param = new MapSqlParameterSource().addValue("middleCategory", items.middleCategory);
@@ -101,8 +100,6 @@ public class EditRepository {
     * @param items
     */
    public void edit(Items items){
-    // System.out.println("商品情報を変更"+items);
-    // System.out.println(items.getSmallCategory());
     Integer category = Integer.parseInt(items.getSmallCategory()); // データ型を整合
     items.setCategory(category);
     String sql = "UPDATE items SET name=:name, condition=:condition, category=:category, brand=:brand, price=:price, description=:description WHERE id=:id;";
