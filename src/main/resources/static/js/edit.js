@@ -20,14 +20,14 @@ function handleSecondSelectChange(select) {
 // 大カテゴリーに付随した中カテゴリーを非同期通信で取得
 document.getElementById("firstSelect").addEventListener("change", function() {
   var selectedValue = this.value;
-  console.log(selectedValue);
+  console.log('L='+selectedValue);
 
   // URLSearchParamsを使ってクエリパラメータを生成
   var params = new URLSearchParams();
   params.append('bigCategory', selectedValue);
 
   // クエリパラメータを含むURLを作成してGETリクエストを送信
-  fetch('/mercari-data/edit/category-response?' + params, {
+  fetch('/edit/category-response?' + params, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
@@ -55,14 +55,14 @@ document.getElementById("firstSelect").addEventListener("change", function() {
 // 中カテゴリーに付随した小カテゴリーを非同期通信で取得
 document.getElementById("secondSelect").addEventListener("change", function() {
   var selectedValue = this.value;
-  console.log(selectedValue);
+  console.log('M='+selectedValue);
 
   // URLSearchParamsを使ってクエリパラメータを生成
   var params = new URLSearchParams();
   params.append('middleCategory', selectedValue);
   
   // クエリパラメータを含むURLを作成してGETリクエストを送信
-  fetch('/mercari-data/edit/category-response?' + params, {
+  fetch('/edit/category-response?' + params, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
@@ -77,7 +77,7 @@ document.getElementById("secondSelect").addEventListener("change", function() {
         // 例: 取得したデータが配列であり、その各要素をoption要素としてthirdSelectに追加する
         data.forEach(item => {
             var option = document.createElement("option");
-            option.value = item.smallCategory; // 適切な値を設定する
+            option.value = item.category; // 適切な値を設定する
             option.text = item.smallCategory; // 適切な表示テキストを設定する
             thirdSelect.appendChild(option);
         });
@@ -85,4 +85,9 @@ document.getElementById("secondSelect").addEventListener("change", function() {
   .catch(error => {
       console.error('エラーが発生しました', error);
   });
+});
+
+document.getElementById("thirdSelect").addEventListener("change", function() {
+  var selectedValue = this.value;
+  console.log('S='+selectedValue);
 });

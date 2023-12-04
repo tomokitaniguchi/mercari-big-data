@@ -14,9 +14,9 @@ import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpSession;
 
 import com.example.domain.Items;
-import com.example.form.EditForm;
 import com.example.service.EditService;
 
 @Controller
@@ -26,9 +26,19 @@ public class EditController {
   private EditService editService;
   @Autowired
   private EditService detailService;
-  
+  @Autowired
+  private HttpSession session;
+  /**
+   * 編集画面を表示する
+   * @param model
+   * @param id
+   * @param items
+   * @param bigCategory
+   * @param middleCategory
+   * @return
+   */
   @GetMapping("")
-  public String edit(Model model, Integer id, Items items, String bigCategory, String middleCategory, EditForm eForm){    
+  public String edit(Model model, Integer id, Items items, String bigCategory, String middleCategory){    
     // 商品情報を取得
     List<Items> detailList = detailService.detailList(id);
     model.addAttribute("detailList", detailList);
@@ -44,7 +54,14 @@ public class EditController {
     return "edit.html";
   }
 
-  // 非同期処理のリクエストに対するレスポンスをJSON形式で返すメソッド
+  /**
+   * 非同期処理のリクエストに対するレスポンスをJSON形式で返すメソッド
+   * @param items
+   * @param bigCategory
+   * @param middleCategory
+   * @return
+   * @throws JsonProcessingException
+   */
   @GetMapping("/category-response")
   public ResponseEntity<String> categoryResponse(Items items, String bigCategory, String middleCategory) throws JsonProcessingException{
     if (bigCategory!=null) {
@@ -66,9 +83,17 @@ public class EditController {
     }
   }
   
-  @PostMapping("/select")
-  public String select(String bigCategory){
-    // System.out.println(bigCategory);
-    return null;
+  /**
+   * 商品情報を編集する
+   * @param items
+   * @return
+   */
+  @PostMapping("/edit-do")
+  public String editDo(Model model, Items items, Integer id){
+    editService.edit(items);
+    // 商品情報を取得
+    List<Items> detailList = detailService.detailList(id);
+    session.setAttribute("detailList", detailList);
+    return "/detail";
   }
 }
