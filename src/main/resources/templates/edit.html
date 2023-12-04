@@ -49,7 +49,7 @@
     <h2>Edit</h2>
 
     <!-- edit form -->
-    <form th:action="@{/edit/select}" method="POST" th:object="${editForm}" class="form-horizontal" th:each="detail:${detailList}" >
+    <form th:action="@{/edit/edit-do?id=}+${detail.id}" method="POST" th:object="${editForm}" class="form-horizontal" th:each="detail:${detailList}" >
         <!-- name -->
         <div class="form-group">
           <label for="inputName" class="col-sm-2 control-label">name</label>

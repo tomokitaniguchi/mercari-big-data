@@ -25,11 +25,11 @@ public class EditService {
   }
 
   public List<Items> smallCategory(Items items, String middleCategory){
-    return editRepository.smallCategory(items,middleCategory);
+    return editRepository.smallCategory(items, middleCategory);
   }
 
-  public void edit(Items item){
-    editRepository.edit(item);
+  public void edit(Items items){
+    editRepository.edit(items);
   }
 
   public List<Items> detailList(Integer id) {

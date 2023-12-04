@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,7 +23,7 @@ public class DetailController {
   private DetailService service;
 
   @GetMapping("")
-  public String detail(Model model, Integer id){
+  public String detail(Integer id){
     // 商品詳細情報を取得
     List<Items> detailList = service.detailList(id);
     session.setAttribute("detailList", detailList);

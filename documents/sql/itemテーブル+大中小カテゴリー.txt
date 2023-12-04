@@ -1,0 +1,13 @@
+SELECT distinct i.id,i.name,i.condition,i.category,BIG_CATEGORY, MIDDLE_CATEGORY, SMALL_CATEGORY,i.brand,i.price,i.shipping,i.description
+               FROM ITEMS AS I INNER JOIN (
+               SELECT A.ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY
+               FROM CATEGORY AS A
+                INNER JOIN (
+               SELECT DISTINCT ID,
+               SPLIT_PART(NAME_ALL,'/',1) AS BIG_CATEGORY,
+               SPLIT_PART(NAME_ALL,'/',2) AS MIDDLE_CATEGORY,
+               SPLIT_PART(NAME_ALL,'/',3) AS SMALL_CATEGORY
+               FROM CATEGORY WHERE NAME_ALL IS NOT NULL
+                ) AS B ON A.ID = B.ID
+               ORDER BY ID
+                ) AS C ON I.CATEGORY = C.ID order by i.id;
