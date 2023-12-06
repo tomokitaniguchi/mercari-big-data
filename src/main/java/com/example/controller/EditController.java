@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 
 import com.example.domain.Items;
+import com.example.form.EditForm;
 import com.example.service.EditService;
 
 @Controller
@@ -38,7 +41,7 @@ public class EditController {
    * @return
    */
   @GetMapping("")
-  public String edit(Model model, Integer id, Items items, String bigCategory, String middleCategory){    
+  public String edit(Model model, Integer id, Items items, String bigCategory, String middleCategory, EditForm editForm){    
     // 商品情報を取得
     List<Items> detailList = detailService.detailList(id);
     model.addAttribute("detailList", detailList);
@@ -89,7 +92,15 @@ public class EditController {
    * @return
    */
   @PostMapping("/edit-do")
-  public String editDo(Model model, Items items, Integer id){
+  public String editDo(Model model, Items items, Integer id, @Validated EditForm editForm, BindingResult result, String bigCategory, String middleCategory){
+    // エラー時の処理
+    if (result.hasErrors()) {
+      return edit(model, id, items, bigCategory, middleCategory, editForm);
+    }
+    if (items.getDescription()=="") {
+      items.setDescription("No description yet");
+    }
+    // 更新処理
     editService.edit(items);
     // 商品情報を取得
     List<Items> detailList = detailService.detailList(id);

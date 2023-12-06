@@ -50,3 +50,7 @@ INNER JOIN (
 ) AS b
 ON a.name_all = b.category_name
 ORDER BY b.id;
+
+-- big_categoryテーブルに登録
+INSERT INTO public.big_category(id, name)
+SELECT id, name FROM category WHERE id BETWEEN 1 AND 10;

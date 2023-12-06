@@ -35,6 +35,8 @@ document.getElementById("firstSelect").addEventListener("change", function() {
   })
   .then(response => response.json()) // レスポンスをJSONとして解析
     .then(data => {
+        // '- childCategory -' を手動で追加
+        data.unshift({ middleCategory: '- childCategory -' });
         // 取得したデータを利用してsecondSelectのオプションを変更
         var secondSelect = document.getElementById("secondSelect");
         // 既存のオプションをクリアする
@@ -44,6 +46,11 @@ document.getElementById("firstSelect").addEventListener("change", function() {
             var option = document.createElement("option");
             option.value = item.middleCategory; // 適切な値を設定する
             option.text = item.middleCategory; // 適切な表示テキストを設定する
+            // '- childCategory -' を disabled, selectedにする
+            if (item.middleCategory === '- childCategory -') {
+              option.disabled = true;
+              option.selected = true;
+            }
             secondSelect.appendChild(option);
         });
     })
@@ -55,36 +62,49 @@ document.getElementById("firstSelect").addEventListener("change", function() {
 // 中カテゴリーに付随した小カテゴリーを非同期通信で取得
 document.getElementById("secondSelect").addEventListener("change", function() {
   var selectedValue = this.value;
-  console.log('M='+selectedValue);
+  console.log('M=' + selectedValue);
 
   // URLSearchParamsを使ってクエリパラメータを生成
   var params = new URLSearchParams();
   params.append('middleCategory', selectedValue);
-  
+
   // クエリパラメータを含むURLを作成してGETリクエストを送信
   fetch('/edit/category-response?' + params, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json'
-      }
-  })
-  .then(response => response.json()) // レスポンスをJSONとして解析
-    .then(data => {
-        // 取得したデータを利用してthirdSelectのオプションを変更
-        var thirdSelect = document.getElementById("thirdSelect");
-        // 既存のオプションをクリアする
-        thirdSelect.innerHTML = '';
-        // 例: 取得したデータが配列であり、その各要素をoption要素としてthirdSelectに追加する
-        data.forEach(item => {
-            var option = document.createElement("option");
-            option.value = item.category; // 適切な値を設定する
-            option.text = item.smallCategory; // 適切な表示テキストを設定する
-            thirdSelect.appendChild(option);
-        });
-    })
-  .catch(error => {
-      console.error('エラーが発生しました', error);
-  });
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+      .then(response => response.json()) // レスポンスをJSONとして解析
+      .then(data => {
+          // '- grandChild -' を手動で追加
+          data.unshift({ smallCategory: '- grandChild -' });
+          // 取得したデータを利用してthirdSelectのオプションを変更
+          var thirdSelect = document.getElementById("thirdSelect");
+          // 既存のオプションをクリアする
+          thirdSelect.innerHTML = '';
+          // 重複を避けるためのマップを作成
+          const seen = new Set();     
+          // 例: 取得したデータが配列であり、その各要素をoption要素としてthirdSelectに追加する
+          data.forEach(item => {
+              // item.smallCategory が重複していないかチェックし、重複していなければオプションを追加
+              if (!seen.has(item.smallCategory)) {
+                  seen.add(item.smallCategory);
+                  var option = document.createElement("option");
+                  option.value = item.category; // 適切な値を設定する
+                  option.text = item.smallCategory; // 適切な表示テキストを設定する
+                  // '- childCategory -' を disabled, selectedにする
+                  if (item.smallCategory === '- grandChild -') {
+                    option.disabled = true;
+                    option.selected = true;
+                  }
+                  thirdSelect.appendChild(option);
+              }
+          });
+      })
+      .catch(error => {
+          console.error('エラーが発生しました', error);
+      });
 });
 
 document.getElementById("thirdSelect").addEventListener("change", function() {

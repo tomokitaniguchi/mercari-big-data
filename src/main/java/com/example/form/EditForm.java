@@ -1,25 +1,25 @@
 package com.example.form;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class EditForm {
 
-  public Integer id;
+  @NotBlank(message = "商品名を入力してください。")
   public String name;
   public Integer condition;
   public String category;
+  @NotNull(message = "カテゴリーを選んでください。")
   public String bigCategory;
+  @NotNull(message = "カテゴリーを選んでください。")
   public String middleCategory;
+  @NotNull(message = "カテゴリーを選んでください。")
   public String smallCategory;
   public String brand;
+  @NotNull(message = "値段を入力してください。")
   public Integer price;
-  public Integer shipping;
   public String description;
   
-  public Integer getId() {
-    return id;
-  }
-  public void setId(Integer id) {
-    this.id = id;
-  }
   public String getName() {
     return name;
   }
@@ -67,12 +67,6 @@ public class EditForm {
   }
   public void setPrice(Integer price) {
     this.price = price;
-  }
-  public Integer getShipping() {
-    return shipping;
-  }
-  public void setShipping(Integer shipping) {
-    this.shipping = shipping;
   }
   public String getDescription() {
     return description;
