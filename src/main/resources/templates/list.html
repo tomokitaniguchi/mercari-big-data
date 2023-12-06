@@ -56,17 +56,17 @@
         <div class="form-group"><i class="fa fa-plus"></i></div>
         <div class="form-group">
           <select class="form-control" name="bigCategory" id="firstSelect" onchange="handleFirstSelectChange(this)">
-            <option>- 大カテゴリー -</option>
+            <option>- parentCategory -</option>
             <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}">
             </option>
           </select>
           <select class="form-control" name="middleCategory" id="secondSelect" onchange="handleSecondSelectChange(this)" disabled>
-            <option>- 中カテゴリー -</option>
+            <option>- childCategory -</option>
             <option th:each="middleCategoryList:${middleCategoryList}" th:text="${middleCategoryList.name}">
             </option>
           </select>
           <select class="form-control" name="smallCategory" id="thirdSelect" disabled>
-            <option>- 小カテゴリー -</option>
+            <option>- grandChild -</option>
             <option th:each="smallCategoryList:${smallCategoryList}" th:text="${smallCategoryList.name}">
             </option>
           </select>
