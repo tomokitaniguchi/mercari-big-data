@@ -70,24 +70,29 @@
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label">category</label>
           <div class="col-sm-8">
+            <div th:errors="*{bigCategory}" style="color: red"></div>
             <select class="form-control" id="firstSelect" name="bigCategory" onchange="handleFirstSelectChange(this)">
-              <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}" th:selected="${bigCategory.name == detail.bigCategory}"></option>  
+              <option selected disabled>- parentCategory - </option>
+              <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}"></option>  
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
+            <div th:errors="*{middleCategory}" style="color: red"></div>
             <select class="form-control" id="secondSelect" name="middleCategory" onchange="handleSecondSelectChange(this)" disabled>
-              <option th:each="middleCategory:${middleCategoryList}" th:text="${middleCategory.middleCategory}" th:selected="${middleCategory.name == detail.middleCategory}"></option>
+              <option>- childCategory -</option>
             </select>
           </div>
         </div>
         <div class="form-group">
           <label for="category" class="col-sm-2 control-label"></label>
           <div class="col-sm-8">
+            <div th:errors="*{smallCategory}" style="color: red"></div>
             <select class="form-control" id="thirdSelect" name="smallCategory" disabled>
-              <option th:each="smallCategory:${smallCategoryList}" th:text="${smallCategory.smallCategory}" th:selected="${smallCategory.name == detail.smallCategory}"></option>
+              <option>- grandChild -</option>
+              <option th:each="smallCategory:${smallCategoryList}" th:text="${smallCategory.smallCategory}"></option>
             </select>
           </div>
         </div>

@@ -95,11 +95,12 @@ public class EditController {
   public String editDo(Model model, Items items, Integer id, @Validated EditForm editForm, BindingResult result, String bigCategory, String middleCategory){
     // エラー時の処理
     if (result.hasErrors()) {
-      return edit(model, id, items, middleCategory, middleCategory, editForm);
+      return edit(model, id, items, bigCategory, middleCategory, editForm);
     }
     if (items.getDescription()=="") {
       items.setDescription("No description yet");
     }
+    // 更新処理
     editService.edit(items);
     // 商品情報を取得
     List<Items> detailList = detailService.detailList(id);

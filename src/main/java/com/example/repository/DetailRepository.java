@@ -21,7 +21,7 @@ public class DetailRepository {
      private static final RowMapper<Items> LIST_ROW_MAPPER = new BeanPropertyRowMapper<>(Items.class);
 
      public List<Items> detail(Integer id){
-      String sql = "SELECT I.ID,NAME,CONDITION,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION \n" + //
+      String sql = "SELECT I.ID,NAME,CONDITION,CATEGORY,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION \n" + //
                 "FROM ITEMS AS I INNER JOIN \n" + //
                 "(SELECT A.ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY \n" + //
                 "FROM CATEGORY AS A INNER JOIN (SELECT DISTINCT ID,\n" + //

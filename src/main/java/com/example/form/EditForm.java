@@ -9,8 +9,11 @@ public class EditForm {
   public String name;
   public Integer condition;
   public String category;
+  @NotNull(message = "カテゴリーを選んでください。")
   public String bigCategory;
+  @NotNull(message = "カテゴリーを選んでください。")
   public String middleCategory;
+  @NotNull(message = "カテゴリーを選んでください。")
   public String smallCategory;
   public String brand;
   @NotNull(message = "値段を入力してください。")
