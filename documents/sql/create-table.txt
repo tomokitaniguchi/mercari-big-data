@@ -5,6 +5,7 @@
 -- Application  : A5:SQL Mk-2
 
 -- テーブルを削除する
+DROP TABLE IF EXISTS big_category;
 DROP TABLE IF EXISTS category ;
 DROP TABLE IF EXISTS items ;
 DROP TABLE IF EXISTS original ;
@@ -78,6 +79,23 @@ create table users (
 create unique index users_pki
   on users(id);
 
+-- big_category
+CREATE TABLE IF NOT EXISTS public.big_category
+(
+    id integer NOT NULL,
+    name character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT big_category_pkey PRIMARY KEY (id),
+    CONSTRAINT id FOREIGN KEY (id)
+        REFERENCES public.category (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.big_category
+    OWNER to postgres;
+    
 comment on table category is 'category';
 comment on column category.name_all is 'name_all';
 comment on column category.id is 'id';
