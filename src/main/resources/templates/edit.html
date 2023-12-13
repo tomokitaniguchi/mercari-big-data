@@ -72,7 +72,7 @@
           <div class="col-sm-8">
             <div th:errors="*{bigCategory}" style="color: red"></div>
             <select class="form-control" id="firstSelect" name="bigCategory" onchange="handleFirstSelectChange(this)">
-              <option selected disabled>- parentCategory - </option>
+              <option selected disabled>- parentCategory -</option>
               <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}"></option>  
             </select>
           </div>

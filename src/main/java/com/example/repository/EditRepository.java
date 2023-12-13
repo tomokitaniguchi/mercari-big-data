@@ -104,6 +104,9 @@ public class EditRepository {
       Integer category = Integer.parseInt(items.getSmallCategory()); // データ型を整合
       items.setCategory(category);
     }
+    if (items.getBrand()=="") {
+      items.setBrand(null);
+    }
     String sql = "UPDATE items SET name=:name, condition=:condition, category=:category, brand=:brand, price=:price, description=:description WHERE id=:id;";
     SqlParameterSource param = new BeanPropertySqlParameterSource(items);
     template.update(sql, param);
