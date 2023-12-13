@@ -49,31 +49,31 @@
 
     <!-- 検索フォーム -->
     <div id="forms">
-      <form action="" class="form-inline" role="form">
+      <form th:action="@{/index/search}" method="GET" class="form-inline" role="form">
         <div class="form-group">
-          <input type="input" class="form-control" id="name" placeholder="アイテム名"/>
+          <input type="input" class="form-control" id="name" name="name" placeholder="アイテム名"/>
         </div>
         <div class="form-group"><i class="fa fa-plus"></i></div>
         <div class="form-group">
           <select class="form-control" name="bigCategory" id="firstSelect" onchange="handleFirstSelectChange(this)">
-            <option>- parentCategory -</option>
+            <option value="">- parentCategory -</option>
             <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}">
             </option>
           </select>
           <select class="form-control" name="middleCategory" id="secondSelect" onchange="handleSecondSelectChange(this)" disabled>
-            <option>- childCategory -</option>
-            <option th:each="middleCategoryList:${middleCategoryList}" th:text="${middleCategoryList.name}">
+            <option value="">- childCategory -</option>
+            <option th:each="middleCategory:${middleCategoryList}" th:text="${middleCategory.name}">
             </option>
           </select>
           <select class="form-control" name="smallCategory" id="thirdSelect" disabled>
-            <option>- grandChild -</option>
-            <option th:each="smallCategoryList:${smallCategoryList}" th:text="${smallCategoryList.name}">
+            <option value="">- grandChild -</option>
+            <option th:each="smallCategory:${smallCategoryList}" th:text="${smallCategory.name}">
             </option>
           </select>
         </div>
         <div class="form-group"><i class="fa fa-plus"></i></div>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="ブランド"/>
+          <input type="text" class="form-control" id="brand" name="brand" placeholder="ブランド"/>
         </div>
         <div class="form-group"></div>
         <button type="submit" class="btn btn-default"><i class="fa fa-angle-double-right"></i> 検索</button>
@@ -103,7 +103,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="index:${indexList}">
+          <tr th:each="index:${session.indexList}">
             <td>
             <a th:href="@{/detail?id=}+${index.id}">
               <div class="item-name" th:text="${index.name}"></div>
@@ -111,14 +111,14 @@
             </td>
             <td class="item-price" th:text="${index.price}+'.0'"></td>
             <td>
-            <a href="">
-              <span class="item-category" th:text="${index.bigCategory}"></span>
+            <a th:href="@{/index/search?bigCategory=}+${index.bigCategory}">
+              <span class="item-category" name="bigCategory" th:text="${index.bigCategory}"></span>
             </a> / 
-            <a href="">
-              <span class="item-category" th:text="${index.middleCategory}"></span>
+            <a th:href="@{/index/search?parentId=}+${index.parentId}">
+              <span class="item-category" name="parentId" th:text="${index.middleCategory}"></span>
             </a> / 
-            <a href="">
-              <span class="item-category" th:text="${index.smallCategory}"></span>
+            <a th:href="@{/index/search?category=}+${index.category}">
+              <span class="item-category" name="category" th:text="${index.smallCategory}"></span>
             </a>
             </td>
             <td class="item-brand" th:text="${index.brand}"><a href=""></a></td>
@@ -154,6 +154,6 @@
       </div>
     </div>
   </div>
-  <script src="src/main/resources/static/js/edit.js" th:src="@{/js/edit.js}"></script>
+  <script src="src/main/resources/static/js/list.js" th:src="@{/js/list.js}"></script>
 </body>
 </html>

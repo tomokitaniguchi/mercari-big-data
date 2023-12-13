@@ -29,4 +29,8 @@ public class IndexService {
   public List<Items> smallCategory(){
     return repository.smallCategory();
   }
+
+  public List<Items> search(Items items){
+    return repository.search(items); 
+  }
 }
