@@ -97,9 +97,15 @@ public class EditController {
     if (result.hasErrors()) {
       return edit(model, id, items, bigCategory, middleCategory, editForm);
     }
+    // 必要なプロパティに値をセット
     if (items.getDescription()=="") {
       items.setDescription("No description yet");
     }
+    if (items.getBrand()=="") {
+      items.setBrand(null);
+    }
+    // データ型を整合
+    items.setCategory(Integer.parseInt(items.getSmallCategory())); 
     // 更新処理
     editService.edit(items);
     // 商品情報を取得
