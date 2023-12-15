@@ -22,6 +22,12 @@ public class IndexController {
   @Autowired
   private HttpSession session;
   
+  /**
+   * 商品一覧画面を表示
+   * @param model
+   * @param items
+   * @return
+   */
   @GetMapping("")
   public String index(Model model,Items items){
     // 商品一覧を取得
@@ -39,6 +45,12 @@ public class IndexController {
     return "list.html";
   }
 
+  /**
+   * 商品検索機能
+   * @param model
+   * @param items
+   * @return
+   */
   @GetMapping("/search")
   public String search(Model model, Items items){
     System.out.println("最初に入った"+items);

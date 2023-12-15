@@ -99,14 +99,7 @@ public class EditRepository {
     * 商品情報を変更
     * @param items
     */
-   public void edit(Items items){
-    if (items.getSmallCategory()!=null) {
-      Integer category = Integer.parseInt(items.getSmallCategory()); // データ型を整合
-      items.setCategory(category);
-    }
-    if (items.getBrand()=="") {
-      items.setBrand(null);
-    }
+   public void edit(Items items){ 
     String sql = "UPDATE items SET name=:name, condition=:condition, category=:category, brand=:brand, price=:price, description=:description WHERE id=:id;";
     SqlParameterSource param = new BeanPropertySqlParameterSource(items);
     template.update(sql, param);

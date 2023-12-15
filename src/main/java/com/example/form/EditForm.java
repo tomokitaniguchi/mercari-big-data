@@ -7,6 +7,7 @@ public class EditForm {
 
   @NotBlank(message = "商品名を入力してください。")
   public String name;
+  @NotNull(message = "コンディションを選んでください。")
   public Integer condition;
   public String category;
   @NotNull(message = "カテゴリーを選んでください。")

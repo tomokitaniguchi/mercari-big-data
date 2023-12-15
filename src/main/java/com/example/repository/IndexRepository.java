@@ -176,6 +176,25 @@ public class IndexRepository {
        System.out.println("商品名と大カテゴリーで検索されました");
        return searchList;
     }
+    // 商品名とブランド名で検索
+    if (items.name!=null && items.brand!=null) {
+       String sql = "SELECT I.ID,NAME,CONDITION,PARENT_ID,CATEGORY,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION\n" + //
+            "FROM ITEMS AS I INNER JOIN \n" + //
+            "(SELECT A.ID,A.PARENT_ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY\n" + //
+            "FROM CATEGORY AS A INNER JOIN (SELECT DISTINCT ID,\n" + //
+            "SPLIT_PART(NAME_ALL,'/',1) AS BIG_CATEGORY,\n" + //
+            "SPLIT_PART(NAME_ALL,'/',2) AS MIDDLE_CATEGORY,\n" + //
+            "SPLIT_PART(NAME_ALL,'/',3) AS SMALL_CATEGORY\n" + //
+            "FROM CATEGORY WHERE NAME_ALL IS NOT NULL ) AS B ON A.ID = B.ID\n" + //
+            "ORDER BY ID) AS C ON I.CATEGORY = C.ID\n" + //
+            "WHERE name LIKE :name AND BRAND LIKE :brand ORDER BY ID LIMIT 30 OFFSET 0;";
+       SqlParameterSource param = new MapSqlParameterSource()
+       .addValue("name", "%" + items.name + "%")
+       .addValue("brand", "%" + items.brand + "%"); 
+       List<Items> searchList = template.query(sql, param, LIST_ROW_MAPPER);
+       System.out.println("商品名とブランド名で検索されました");
+       return searchList;
+    }
     // 商品名だけで検索
     if (items.name!=null) {
       String sql = "SELECT I.ID,NAME,CONDITION,PARENT_ID,CATEGORY,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION\n" + //
@@ -234,6 +253,23 @@ public class IndexRepository {
        System.out.println("大カテゴリーと中カテゴリーとブランド名で検索されました");
        return searchList;
     }
+    // 大中小カテゴリーで検索
+    if(items.bigCategory!=null && items.middleCategory!=null && items.smallCategory!=null){
+       String sql = "SELECT I.ID,NAME,CONDITION,PARENT_ID,CATEGORY,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION\n" + //
+            "FROM ITEMS AS I INNER JOIN \n" + //
+            "(SELECT A.ID,A.PARENT_ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY\n" + //
+            "FROM CATEGORY AS A INNER JOIN (SELECT DISTINCT ID,\n" + //
+            "SPLIT_PART(NAME_ALL,'/',1) AS BIG_CATEGORY,\n" + //
+            "SPLIT_PART(NAME_ALL,'/',2) AS MIDDLE_CATEGORY,\n" + //
+            "SPLIT_PART(NAME_ALL,'/',3) AS SMALL_CATEGORY\n" + //
+            "FROM CATEGORY WHERE NAME_ALL IS NOT NULL ) AS B ON A.ID = B.ID\n" + //
+            "ORDER BY ID) AS C ON I.CATEGORY = C.ID\n" + //
+            "WHERE BIG_CATEGORY = :bigCategory AND MIDDLE_CATEGORY = :middleCategory AND SMALL_CATEGORY = :smallCategory ORDER BY ID LIMIT 30 OFFSET 0;";
+       SqlParameterSource param = new MapSqlParameterSource().addValue("bigCategory", items.bigCategory).addValue("middleCategory", items.middleCategory).addValue("smallCategory", items.smallCategory); 
+       List<Items> searchList = template.query(sql, param, LIST_ROW_MAPPER);
+       System.out.println("大+中+小カテゴリーで検索されました");
+       return searchList;
+    } 
     // 大カテゴリーとブランド名で検索
     if (items.bigCategory!=null && items.brand!=null) {
        String sql = "SELECT I.ID,NAME,CONDITION,PARENT_ID,CATEGORY,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION\n" + //
@@ -253,23 +289,6 @@ public class IndexRepository {
        System.out.println("大カテゴリーとブランド名で検索されました");
        return searchList;
     }
-    // 大中小カテゴリーで検索
-    if(items.bigCategory!=null && items.middleCategory!=null && items.smallCategory!=null){
-       String sql = "SELECT I.ID,NAME,CONDITION,PARENT_ID,CATEGORY,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION\n" + //
-            "FROM ITEMS AS I INNER JOIN \n" + //
-            "(SELECT A.ID,A.PARENT_ID,B.BIG_CATEGORY,B.MIDDLE_CATEGORY,B.SMALL_CATEGORY\n" + //
-            "FROM CATEGORY AS A INNER JOIN (SELECT DISTINCT ID,\n" + //
-            "SPLIT_PART(NAME_ALL,'/',1) AS BIG_CATEGORY,\n" + //
-            "SPLIT_PART(NAME_ALL,'/',2) AS MIDDLE_CATEGORY,\n" + //
-            "SPLIT_PART(NAME_ALL,'/',3) AS SMALL_CATEGORY\n" + //
-            "FROM CATEGORY WHERE NAME_ALL IS NOT NULL ) AS B ON A.ID = B.ID\n" + //
-            "ORDER BY ID) AS C ON I.CATEGORY = C.ID\n" + //
-            "WHERE BIG_CATEGORY = :bigCategory AND MIDDLE_CATEGORY = :middleCategory AND SMALL_CATEGORY = :smallCategory ORDER BY ID LIMIT 30 OFFSET 0;";
-       SqlParameterSource param = new MapSqlParameterSource().addValue("bigCategory", items.bigCategory).addValue("middleCategory", items.middleCategory).addValue("smallCategory", items.smallCategory); 
-       List<Items> searchList = template.query(sql, param, LIST_ROW_MAPPER);
-       System.out.println("大+中+小カテゴリーで検索されました");
-       return searchList;
-    } 
     // 大中カテゴリーで検索
     if(items.bigCategory!=null && items.middleCategory!=null){
        String sql = "SELECT I.ID,NAME,CONDITION,PARENT_ID,CATEGORY,BIG_CATEGORY,MIDDLE_CATEGORY,SMALL_CATEGORY,BRAND,PRICE,SHIPPING,DESCRIPTION\n" + //

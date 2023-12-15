@@ -92,7 +92,6 @@
             <div th:errors="*{smallCategory}" style="color: red"></div>
             <select class="form-control" id="thirdSelect" name="smallCategory" disabled>
               <option>- grandChild -</option>
-              <option th:each="smallCategory:${smallCategoryList}" th:text="${smallCategory.smallCategory}"></option>
             </select>
           </div>
         </div>
