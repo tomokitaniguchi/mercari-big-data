@@ -41,15 +41,27 @@ ON a.middle_category = b.middle_category AND a.big_category = b.big_category
 ORDER BY category_name;
 
 -- itemsテーブルに登録
-INSERT INTO items (id,name,condition,category,brand,price,shipping,description)
-SELECT distinct b.id ,b.name, b.condition_id AS condition, a.id AS category, b.brand,b.price,b.shipping,b.description
+DROP TABLE IF EXISTS temp_items;
+CREATE TEMP TABLE temp_items AS
+SELECT
+    b.name,
+    b.condition_id AS condition,
+    a.id AS category,
+    b.brand,
+    b.price,
+    b.shipping,
+    b.description,
+    b.id AS original_id -- originalテーブルのidを取得
 FROM category AS a
 INNER JOIN (
-	SELECT id, name, category_name, condition_id, brand,price,shipping,description
-	FROM original
-) AS b
-ON a.name_all = b.category_name
-ORDER BY b.id;
+    SELECT id, name, category_name, condition_id, brand, price, shipping, description
+    FROM original
+) AS b ON a.name_all = b.category_name;
+
+INSERT INTO items (name, condition, category, brand, price, shipping, description)
+SELECT name, condition, category, brand, price, shipping, description
+FROM temp_items
+ORDER BY original_id; -- originalテーブルのidの順番にソート-- 
 
 -- big_categoryテーブルに登録
 INSERT INTO public.big_category(id, name)

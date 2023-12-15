@@ -26,7 +26,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="./list.html">Rakus Items</a>
+      <a class="navbar-brand" th:href="@{/index}">Rakus Items</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <div>
@@ -42,46 +42,46 @@
 
   <!-- details -->
   <div id="input-main" class="container">
-    <a type="button" class="btn btn-default" href="./list.html"><i class="fa fa-reply"></i> back</a>
+    <a type="button" class="btn btn-default" th:href="@{/index}"><i class="fa fa-reply"></i> back</a>
     <h2>Add</h2>
 
     <!-- add form -->
-    <form action="#" method="POST" class="form-horizontal">
+    <form  th:action="@{/add/add-do}" method="POST" class="form-horizontal" th:object="${editForm}">
       <!-- name -->
       <div class="form-group">
         <label for="inputName" class="col-sm-2 control-label">name</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="inputName"/>
-          <span class="text-danger">error:may not be empty</span>
+          <div th:errors="*{name}" style="color: red"></div>
+          <input type="text" class="form-control" id="inputName" name="name"/>
+          <!-- <span class="text-danger">error:may not be empty</span> -->
         </div>
       </div>
       <!-- price -->
       <div class="form-group">
         <label for="price" class="col-sm-2 control-label">price</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="price"/>
-          <span class="text-danger">error:may not be empty</span>
+          <div th:errors="*{price}" style="color: red"></div>
+          <input type="text" class="form-control" id="price" name="price"/>
+          <!-- <span class="text-danger">error:may not be empty</span> -->
         </div>
       </div>
       <!-- category -->
       <div class="form-group">
         <label for="category" class="col-sm-2 control-label">category</label>
         <div class="col-sm-8">
-          <select class="form-control">
-            <option>-- parentCategory --</option>
-            <option>parentCategory1</option>
-            <option>parentCategory2</option>
-            <option>parentCategory3</option>
-            <option>parentCategory4</option>
-            <option>parentCategory5</option>
+          <div th:errors="*{bigCategory}" style="color: red"></div>
+          <select class="form-control" id="firstSelect" name="bigCategory" onchange="handleFirstSelectChange(this)">
+            <option selected disabled>-- parentCategory --</option>
+            <option th:each="bigCategory:${bigCategoryList}" th:text="${bigCategory.name}">parentCategory1</option>
           </select>
         </div>
       </div>
       <div class="form-group">
         <label for="category" class="col-sm-2 control-label"></label>
         <div class="col-sm-8">
-          <select class="form-control">
-            <option>-- childCategory --</option>
+          <div th:errors="*{middleCategory}" style="color: red"></div>
+          <select class="form-control"  id="secondSelect" name="middleCategory" onchange="handleSecondSelectChange(this)" disabled>
+            <option >-- childCategory --</option>
             <option>childCategory1</option>
             <option>childCategory2</option>
             <option>childCategory3</option>
@@ -93,8 +93,9 @@
       <div class="form-group">
         <label for="category" class="col-sm-2 control-label"></label>
         <div class="col-sm-8">
-          <select class="form-control">
-            <option>-- grandChild --</option>
+          <div th:errors="*{smallCategory}" style="color: red"></div>
+          <select class="form-control" id="thirdSelect" name="smallCategory" disabled>
+            <option selected  disabled>-- grandChild --</option>
             <option>grandChild1</option>
             <option>grandChild2</option>
             <option>grandChild3</option>
@@ -106,21 +107,23 @@
       <div class="form-group">
         <label for="category" class="col-sm-2 control-label"></label>
         <div class="col-sm-8">
-          <span class="text-danger">error:may not be empty</span>
+          <!-- <span class="text-danger">error:may not be empty</span> -->
         </div>
       </div>
       <!-- brand -->
       <div class="form-group">
         <label for="brand" class="col-sm-2 control-label">brand</label>
         <div class="col-sm-8">
+          <div th:errors="*{brand}" style="color: red"></div>
           <input type="text" id="brand" class="form-control" name="brand"/>
-          <span class="text-danger">error:may not be empty</span>
+          <!-- <span class="text-danger">error:may not be empty</span> -->
         </div>
       </div>
       <!-- condition -->
       <div class="form-group">
         <label for="condition" class="col-sm-2 control-label">condition</label>
         <div class="col-sm-8">
+          <div th:errors="*{condition}" style="color: red"></div>
           <label for="condition1" class="radio-inline">
             <input type="radio" name="condition" id="condition1" value="1"/> 1
           </label>
@@ -135,7 +138,7 @@
       <div class="form-group">
         <label for="category" class="col-sm-2 control-label"></label>
         <div class="col-sm-8">
-          <span class="text-danger">error:may not be empty</span>
+          <!-- <span class="text-danger">error:may not be empty</span> -->
         </div>
       </div>
       <!-- description -->
@@ -143,7 +146,7 @@
         <label for="description" class="col-sm-2 control-label">description</label>
         <div class="col-sm-8">
           <textarea name="description" id="description" class="form-control" rows="5"></textarea>
-          <span class="text-danger">error:may not be empty</span>
+          <!-- <span class="text-danger">error:may not be empty</span> -->
         </div>
       </div>
       <!-- submit button -->
@@ -154,5 +157,7 @@
       </div>
     </form>
   </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="src/main/resources/static/js/edit.js" th:src="@{/js/edit.js}"></script>
 </body>
 </html>
